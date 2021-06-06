@@ -1,0 +1,11 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+# Rider ignored files
+/modules.xml
+/.idea.CleanArchitecture.iml
+/projectSettingsUpdater.xml
+/contentModel.xml
+# Datasource local storage ignored files
+/../../../../../../:\Workspace\CleanArchitecture\.idea\.idea.CleanArchitecture\.idea/dataSources/
+/dataSources.local.xml
