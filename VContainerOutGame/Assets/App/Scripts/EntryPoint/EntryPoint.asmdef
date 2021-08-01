@@ -1,0 +1,20 @@
+{
+    "name": "EntryPoint",
+    "rootNamespace": "App.EntryPoint",
+    "references": [
+        "GUID:0f07987b59b46b048982c6d5c9aa2468",
+        "GUID:a940ab276af22e543b4ceb3433b13ba3",
+        "GUID:46690692dbbdcc942b12f18741ccf586",
+        "GUID:f51ebe6a0ceec4240a699833d6309b23",
+        "GUID:b0214a6008ed146ff8f122a6a9c2f6cc"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
