@@ -1,4 +1,3 @@
-using App.Data;
 using App.Data.Character;
 using App.Domain.Character;
 using App.Presentation;
@@ -45,28 +44,9 @@ namespace App.EntryPoint
 			//
 			// CharacterIcon
 			//
-			builder.RegisterFactory<CharacterEntity, ICharacterIconPresenter>(
-				container =>
-				{
-					var useCase = container.Resolve<ICharacterIconUseCase>();
-					var resourceLoader = container.Resolve<IResourceLoader>();
-					return entity => new CharacterIconPresenter(entity, useCase, resourceLoader);
-				},
-				Lifetime.Transient
-			);
-
-			builder.RegisterFactory<Transform, ICharacterIconPresenter, CharacterIconView>(
-				container =>
-				{
-					return (parent, presenter) =>
-					{
-						var temp = container.Instantiate(iconView, parent);
-						temp.Construct(presenter);
-						return temp;
-					};
-				},
-				Lifetime.Transient
-			);
+			builder.RegisterComponent(iconView);
+			builder.Register<CharacterIconView.Factory>(Lifetime.Transient);
+			builder.Register<ICharacterIconPresenter.IFactory, CharacterIconPresenter.Factory>(Lifetime.Transient);
 		}
 
 	}

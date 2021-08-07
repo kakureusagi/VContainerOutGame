@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using App.Domain.Character;
 using Cysharp.Threading.Tasks;
@@ -15,14 +14,14 @@ namespace App.Presentation.Character
 		public IReadOnlyReactiveProperty<IReadOnlyList<ICharacterIconPresenter>> IconPresenters => iconPresenters;
 
 		readonly ICharacterListUseCase useCase;
-		readonly Func<CharacterEntity, ICharacterIconPresenter> iconFactory;
+		readonly ICharacterIconPresenter.IFactory iconFactory;
 		readonly IResourceLoader resourceLoader;
 
 		readonly ReactiveProperty<IReadOnlyList<ICharacterIconPresenter>> iconPresenters = new ReactiveProperty<IReadOnlyList<ICharacterIconPresenter>>();
 
 
 		[Inject]
-		public CharacterListPresenter(ICharacterListUseCase useCase, Func<CharacterEntity, ICharacterIconPresenter> iconFactory, IResourceLoader resourceLoader)
+		public CharacterListPresenter(ICharacterListUseCase useCase, ICharacterIconPresenter.IFactory iconFactory, IResourceLoader resourceLoader)
 		{
 			this.useCase = useCase;
 			this.iconFactory = iconFactory;
@@ -46,7 +45,7 @@ namespace App.Presentation.Character
 			var presenters = new ICharacterIconPresenter[entities.Count];
 			for (var i = 0; i < presenters.Length; i++)
 			{
-				var presenter = iconFactory(entities[i]);
+				var presenter = iconFactory.Create(entities[i]);
 				presenter.Prepare();
 				presenters[i] = presenter;
 			}

@@ -1,4 +1,3 @@
-using System;
 using Cysharp.Threading.Tasks;
 using UniRx;
 using UnityEngine;
@@ -24,11 +23,11 @@ namespace App.Presentation.Character
 
 
 		ICharacterListPresenter presenter;
-		Func<Transform, ICharacterIconPresenter, CharacterIconView> iconFactory;
+		CharacterIconView.Factory iconFactory;
 
 
 		[Inject]
-		public void Construct(ICharacterListPresenter presenter, Func<Transform, ICharacterIconPresenter, CharacterIconView> iconFactory)
+		public void Construct(ICharacterListPresenter presenter, CharacterIconView.Factory iconFactory)
 		{
 			this.presenter = presenter;
 			this.iconFactory = iconFactory;
@@ -46,8 +45,8 @@ namespace App.Presentation.Character
 
 					foreach (var icon in icons)
 					{
-						var iconView = iconFactory(iconRoot.transform, icon);
-						iconView.Run();
+						var iconView = iconFactory.Create(iconRoot.transform, icon);
+						iconView.Prepare();
 					}
 				})
 				.AddTo(this);

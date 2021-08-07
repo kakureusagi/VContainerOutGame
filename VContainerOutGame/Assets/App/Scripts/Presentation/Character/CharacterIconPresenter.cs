@@ -8,6 +8,25 @@ namespace App.Presentation.Character
 
 	public class CharacterIconPresenter : ICharacterIconPresenter
 	{
+		public class Factory : ICharacterIconPresenter.IFactory
+		{
+			readonly ICharacterIconUseCase useCase;
+			readonly IResourceLoader resourceLoader;
+
+			[Inject]
+			public Factory(ICharacterIconUseCase useCase, IResourceLoader resourceLoader)
+			{
+				this.useCase = useCase;
+				this.resourceLoader = resourceLoader;
+			}
+
+			public ICharacterIconPresenter Create(CharacterEntity entity)
+			{
+				return new CharacterIconPresenter(entity, useCase, resourceLoader);
+			}
+		}
+		
+		
 		public IReadOnlyReactiveProperty<bool> IsSelected => isSelected;
 
 		public string Name => entity.Name;
@@ -25,8 +44,7 @@ namespace App.Presentation.Character
 		IReadOnlyReactiveProperty<bool> isSelected;
 
 
-		[Inject]
-		public CharacterIconPresenter(CharacterEntity entity, ICharacterIconUseCase useCase, IResourceLoader resourceLoader)
+		CharacterIconPresenter(CharacterEntity entity, ICharacterIconUseCase useCase, IResourceLoader resourceLoader)
 		{
 			this.entity = entity;
 			this.useCase = useCase;

@@ -1,12 +1,31 @@
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
+using VContainer;
 
 namespace App.Presentation.Character
 {
 
 	public class CharacterIconView : MonoBehaviour
 	{
+		public class Factory
+		{
+			readonly CharacterIconView prefab;
+
+			[Inject]
+			public Factory(CharacterIconView prefab)
+			{
+				this.prefab = prefab;
+			}
+			
+			public CharacterIconView Create(Transform parent, ICharacterIconPresenter presenter)
+			{
+				var instance = Instantiate(prefab, parent);
+				instance.Construct(presenter);
+				return instance;
+			}
+		}
+		
 
 		[SerializeField]
 		Text characterName = default;
@@ -36,12 +55,12 @@ namespace App.Presentation.Character
 		ICharacterIconPresenter presenter;
 
 
-		public void Construct(ICharacterIconPresenter presenter)
+		void Construct(ICharacterIconPresenter presenter)
 		{
 			this.presenter = presenter;
 		}
 
-		public void Run()
+		public void Prepare()
 		{
 			characterName.text = presenter.Name;
 			level.text = presenter.Level.ToString();
