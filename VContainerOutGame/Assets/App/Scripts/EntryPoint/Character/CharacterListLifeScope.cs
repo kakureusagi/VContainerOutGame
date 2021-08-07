@@ -22,12 +22,12 @@ namespace App.EntryPoint
 		protected override void Configure(IContainerBuilder builder)
 		{
 			base.Configure(builder);
-			
+
 			//
 			// ここはこのシーンで管理するのではなくて、全体で定義するのが良さそう
 			//
 			builder.Register<IResourceLoader, EditorResourceLoader>(Lifetime.Singleton);
-			
+
 			//
 			// Character List
 			//

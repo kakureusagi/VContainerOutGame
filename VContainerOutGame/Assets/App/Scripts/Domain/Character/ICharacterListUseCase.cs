@@ -14,4 +14,5 @@ namespace App.Domain.Character
 		UniTask Prepare();
 		UniTask SellAsync();
 	}
+
 }

@@ -32,12 +32,12 @@ namespace App.Data.Translator
 		{
 			Records = new CharacterTableRecord[]
 			{
-				new CharacterTableRecord {Id = 1, Rarity = 10, Hp = 20, Attack = 10, Name = "ゴブリン"},
-				new CharacterTableRecord {Id = 2, Rarity = 10, Hp = 10, Attack = 20, Name = "スライム"},
-				new CharacterTableRecord {Id = 3, Rarity = 20, Hp = 30, Attack = 20, Name = "ウルフ"},
-				new CharacterTableRecord {Id = 4, Rarity = 20, Hp = 20, Attack = 30, Name = "オーガ"},
-				new CharacterTableRecord {Id = 5, Rarity = 30, Hp = 30, Attack = 30, Name = "デーモン"},
-				new CharacterTableRecord {Id = 6, Rarity = 40, Hp = 40, Attack = 40, Name = "ゴッド"},
+				new CharacterTableRecord { Id = 1, Rarity = 10, Hp = 20, Attack = 10, Name = "ゴブリン" },
+				new CharacterTableRecord { Id = 2, Rarity = 10, Hp = 10, Attack = 20, Name = "スライム" },
+				new CharacterTableRecord { Id = 3, Rarity = 20, Hp = 30, Attack = 20, Name = "ウルフ" },
+				new CharacterTableRecord { Id = 4, Rarity = 20, Hp = 20, Attack = 30, Name = "オーガ" },
+				new CharacterTableRecord { Id = 5, Rarity = 30, Hp = 30, Attack = 30, Name = "デーモン" },
+				new CharacterTableRecord { Id = 6, Rarity = 40, Hp = 40, Attack = 40, Name = "ゴッド" },
 			}
 		};
 

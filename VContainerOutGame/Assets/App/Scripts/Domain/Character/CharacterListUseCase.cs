@@ -14,7 +14,7 @@ namespace App.Domain.Character
 		public IReadOnlyReactiveProperty<int> TotalSellPrice => totalSellPrice;
 		public IReadOnlyReactiveProperty<IReadOnlyList<CharacterEntity>> Characters => characters;
 		public IReadOnlyReactiveCollection<CharacterEntity> SelectedCharacters => selectedCharacters;
-		
+
 		readonly ReactiveProperty<bool> canSell = new ReactiveProperty<bool>();
 		readonly ReactiveProperty<int> totalSellPrice = new ReactiveProperty<int>();
 		readonly ReactiveProperty<IReadOnlyList<CharacterEntity>> characters = new ReactiveProperty<IReadOnlyList<CharacterEntity>>();
@@ -64,7 +64,7 @@ namespace App.Domain.Character
 			{
 				throw new ArgumentNullException(nameof(character));
 			}
-			
+
 			if (selectedCharacters.Contains(character))
 			{
 				return;
@@ -87,4 +87,5 @@ namespace App.Domain.Character
 			canSell.Value = selectedCharacters.Any();
 		}
 	}
+
 }

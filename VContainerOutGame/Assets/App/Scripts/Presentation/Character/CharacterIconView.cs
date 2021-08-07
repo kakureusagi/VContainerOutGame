@@ -17,7 +17,7 @@ namespace App.Presentation.Character
 			{
 				this.prefab = prefab;
 			}
-			
+
 			public CharacterIconView Create(Transform parent, ICharacterIconPresenter presenter)
 			{
 				var instance = Instantiate(prefab, parent);
@@ -25,7 +25,7 @@ namespace App.Presentation.Character
 				return instance;
 			}
 		}
-		
+
 
 		[SerializeField]
 		Text characterName = default;
@@ -70,11 +70,7 @@ namespace App.Presentation.Character
 			characterImage.sprite = presenter.Sprite;
 
 			presenter.IsSelected
-				.Subscribe(isSelected =>
-				{
-					
-					selectionFrame.gameObject.SetActive(isSelected);
-				})
+				.Subscribe(isSelected => selectionFrame.gameObject.SetActive(isSelected))
 				.AddTo(this);
 
 			button.OnClickAsObservable()

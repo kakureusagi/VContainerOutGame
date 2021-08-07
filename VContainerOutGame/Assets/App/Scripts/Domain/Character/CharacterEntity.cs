@@ -23,7 +23,7 @@ namespace App.Domain.Character
 			Hp = hp;
 			Attack = attack;
 		}
-		
+
 	}
 
 }

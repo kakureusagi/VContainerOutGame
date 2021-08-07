@@ -9,6 +9,7 @@ using Cysharp.Threading.Tasks;
 
 namespace App.Data
 {
+
 	/// <summary>
 	/// 本番に近い実装のRepository
 	/// 通信処理ができないので動作しません

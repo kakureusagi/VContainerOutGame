@@ -41,10 +41,8 @@ namespace App.Presentation
 				serializedObject.Update();
 				EditorGUILayout.PropertyField(atlasProperty);
 				serializedObject.ApplyModifiedProperties();
-				
+
 				base.OnInspectorGUI();
-				
-				
 			}
 		}
 #endif

@@ -36,7 +36,7 @@ namespace App.Presentation.Character
 		public async UniTask Prepare()
 		{
 			await presenter.Prepare();
-			
+
 			presenter.IconPresenters
 				.Subscribe(icons =>
 				{
@@ -66,7 +66,6 @@ namespace App.Presentation.Character
 			sellButton.OnClickAsObservable()
 				.Subscribe(_ => presenter.SellSelectedCharacters().Forget())
 				.AddTo(this);
-			
 		}
 
 	}

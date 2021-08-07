@@ -25,8 +25,8 @@ namespace App.Presentation.Character
 				return new CharacterIconPresenter(entity, useCase, resourceLoader);
 			}
 		}
-		
-		
+
+
 		public IReadOnlyReactiveProperty<bool> IsSelected => isSelected;
 
 		public string Name => entity.Name;
