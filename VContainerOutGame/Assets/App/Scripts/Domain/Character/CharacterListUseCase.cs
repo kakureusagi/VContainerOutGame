@@ -65,6 +65,11 @@ namespace App.Domain.Character
 				throw new ArgumentNullException(nameof(character));
 			}
 
+			if (!characters.Value.Contains(character))
+			{
+				throw new InvalidOperationException(nameof(character));
+			}
+
 			if (selectedCharacters.Contains(character))
 			{
 				return;
@@ -80,6 +85,16 @@ namespace App.Domain.Character
 			if (character == null)
 			{
 				throw new ArgumentNullException(nameof(character));
+			}
+
+			if (!characters.Value.Contains(character))
+			{
+				throw new InvalidOperationException(nameof(character));
+			}
+
+			if (!selectedCharacters.Contains(character))
+			{
+				return;
 			}
 
 			selectedCharacters.Remove(character);
