@@ -1,6 +1,7 @@
+using App.Domain;
 using Cysharp.Threading.Tasks;
 
-namespace App.Domain
+namespace App.Presentation.Character
 {
 	public class CharacterListDialogHelper : ICharacterListDialogHelper
 	{
