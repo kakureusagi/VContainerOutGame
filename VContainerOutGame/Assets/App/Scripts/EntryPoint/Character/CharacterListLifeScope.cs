@@ -1,4 +1,5 @@
 using App.Data.Character;
+using App.Domain;
 using App.Domain.Character;
 using App.Presentation;
 using App.Presentation.Character;
@@ -15,6 +16,12 @@ namespace App.EntryPoint
 
 		[SerializeField]
 		CharacterListView view = default;
+
+		[SerializeField]
+		Transform dialogRoot = default;
+
+		[SerializeField]
+		TwoButtonDialogLifeTimeScope[] dialogLifeTimeScopes = default;
 
 
 		protected override void Configure(IContainerBuilder builder)
@@ -34,6 +41,7 @@ namespace App.EntryPoint
 			builder.RegisterComponent(view);
 			builder.Register<ICharacterRepository, TestCharacterRepository>(Lifetime.Transient);
 			builder.Register<CharacterPriceCalculator>(Lifetime.Transient);
+			builder.Register<ICharacterListDialogHelper, CharacterListDialogHelper>(Lifetime.Transient);
 
 			//
 			// CharacterIcon
@@ -41,6 +49,11 @@ namespace App.EntryPoint
 			builder.RegisterComponent(iconView);
 			builder.Register<CharacterIconView.Factory>(Lifetime.Transient);
 			builder.Register<ICharacterIconPresenter.IFactory, CharacterIconPresenter.Factory>(Lifetime.Transient);
+
+			foreach (var scope in dialogLifeTimeScopes)
+			{
+				scope.Configure(builder, dialogRoot);
+			}
 		}
 	}
 }

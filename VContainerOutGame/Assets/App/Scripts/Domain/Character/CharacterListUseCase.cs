@@ -7,7 +7,6 @@ using VContainer;
 
 namespace App.Domain.Character
 {
-
 	public class CharacterListUseCase : ICharacterListUseCase, ICharacterIconUseCase
 	{
 		public IReadOnlyReactiveProperty<bool> CanSell => canSell;
@@ -22,13 +21,15 @@ namespace App.Domain.Character
 
 		readonly CharacterPriceCalculator priceCalculator;
 		readonly ICharacterRepository characterRepository;
+		readonly ICharacterListDialogHelper dialogHelper;
 
 
 		[Inject]
-		public CharacterListUseCase(CharacterPriceCalculator priceCalculator, ICharacterRepository characterRepository)
+		public CharacterListUseCase(CharacterPriceCalculator priceCalculator, ICharacterRepository characterRepository, ICharacterListDialogHelper dialogHelper)
 		{
 			this.priceCalculator = priceCalculator;
 			this.characterRepository = characterRepository;
+			this.dialogHelper = dialogHelper;
 		}
 
 		public async UniTask Prepare()
@@ -37,11 +38,16 @@ namespace App.Domain.Character
 			characters.Value = temp;
 		}
 
-		public async UniTask SellAsync()
+		public async UniTask<bool> SellAsync()
 		{
 			if (!canSell.Value)
 			{
 				throw new InvalidOperationException();
+			}
+
+			if (!await dialogHelper.ConfirmSale())
+			{
+				return false;
 			}
 
 			await characterRepository.SellCharacters(selectedCharacters.ToArray());
@@ -56,6 +62,8 @@ namespace App.Domain.Character
 			selectedCharacters.Clear();
 			totalSellPrice.Value = 0;
 			canSell.Value = false;
+
+			return true;
 		}
 
 		public void Select(CharacterEntity character)
@@ -102,5 +110,4 @@ namespace App.Domain.Character
 			canSell.Value = selectedCharacters.Any();
 		}
 	}
-
 }

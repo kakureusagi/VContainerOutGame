@@ -8,10 +8,8 @@ using UnityEngine.TestTools;
 
 namespace App.Domain.Tests
 {
-
 	public class CharacterListUseCaseTest
 	{
-
 		class MockRepository : ICharacterRepository
 		{
 			CharacterEntity[] entities;
@@ -36,10 +34,29 @@ namespace App.Domain.Tests
 			}
 		}
 
+		class MockDialogHelper : ICharacterListDialogHelper
+		{
+			public bool HasConfirmed { get; private set; }
+			bool result = true;
+
+			public void SetResult(bool result)
+			{
+				this.result = result;
+			}
+
+			public async UniTask<bool> ConfirmSale()
+			{
+				await UniTask.Delay(1);
+				HasConfirmed = true;
+				return result;
+			}
+		}
+
 
 		CharacterPriceCalculator calculator;
 		CharacterEntity[] entities;
 		MockRepository repository;
+		MockDialogHelper dialogHelper;
 
 		[SetUp]
 		public void SetUp()
@@ -53,6 +70,7 @@ namespace App.Domain.Tests
 				new CharacterEntity(4, "name_4", CharacterRarity.Legendary, 4, 40, 400),
 			};
 			repository = new MockRepository(entities);
+			dialogHelper = new MockDialogHelper();
 		}
 
 		[UnityTest]
@@ -60,7 +78,7 @@ namespace App.Domain.Tests
 		{
 			yield return UniTask.ToCoroutine(async () =>
 			{
-				var useCase = new CharacterListUseCase(calculator, repository);
+				var useCase = new CharacterListUseCase(calculator, repository, null);
 				await useCase.Prepare();
 				Assert.That(useCase.Characters.Value.Count, Is.EqualTo(4));
 				Assert.That(useCase.TotalSellPrice.Value, Is.Zero);
@@ -74,7 +92,7 @@ namespace App.Domain.Tests
 		{
 			yield return UniTask.ToCoroutine(async () =>
 			{
-				var useCase = new CharacterListUseCase(calculator, new MockRepository(new CharacterEntity[0]));
+				var useCase = new CharacterListUseCase(calculator, new MockRepository(new CharacterEntity[0]), new MockDialogHelper());
 				await useCase.Prepare();
 
 				Assert.That(useCase.Characters.Value.Count, Is.Zero);
@@ -120,12 +138,32 @@ namespace App.Domain.Tests
 			{
 				var useCase = await CreateUseCaseAsync();
 				useCase.Select(entities[0]);
-				await useCase.SellAsync();
+				var result = await useCase.SellAsync();
 
+				Assert.That(result, Is.True);
 				Assert.That(useCase.TotalSellPrice.Value, Is.Zero);
 				Assert.That(useCase.CanSell.Value, Is.False);
 				Assert.That(useCase.SelectedCharacters.Count, Is.Zero);
 				Assert.That(useCase.Characters.Value.Count, Is.EqualTo(entities.Length - 1));
+				Assert.That(dialogHelper.HasConfirmed, Is.True);
+			});
+		}
+
+		[UnityTest]
+		public IEnumerator キャラクターの売却をキャンセルできる()
+		{
+			yield return UniTask.ToCoroutine(async () =>
+			{
+				dialogHelper.SetResult(false);
+				var useCase = await CreateUseCaseAsync();
+				useCase.Select(entities[0]);
+				var result = await useCase.SellAsync();
+
+				Assert.That(result, Is.False);
+				Assert.That(useCase.TotalSellPrice.Value, Is.GreaterThan(0));
+				Assert.That(useCase.CanSell.Value, Is.True);
+				Assert.That(useCase.SelectedCharacters.Count, Is.EqualTo(1));
+				Assert.That(dialogHelper.HasConfirmed, Is.True);
 			});
 		}
 
@@ -140,12 +178,14 @@ namespace App.Domain.Tests
 					useCase.Select(entity);
 				}
 
-				await useCase.SellAsync();
+				var result = await useCase.SellAsync();
 
+				Assert.That(result, Is.True);
 				Assert.That(useCase.TotalSellPrice.Value, Is.Zero);
 				Assert.That(useCase.CanSell.Value, Is.False);
 				Assert.That(useCase.SelectedCharacters.Count, Is.Zero);
 				Assert.That(useCase.Characters.Value.Count, Is.Zero);
+				Assert.That(dialogHelper.HasConfirmed, Is.True);
 			});
 		}
 
@@ -194,10 +234,9 @@ namespace App.Domain.Tests
 
 		private async UniTask<CharacterListUseCase> CreateUseCaseAsync()
 		{
-			var useCase = new CharacterListUseCase(calculator, repository);
+			var useCase = new CharacterListUseCase(calculator, repository, dialogHelper);
 			await useCase.Prepare();
 			return useCase;
 		}
 	}
-
 }

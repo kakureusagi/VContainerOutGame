@@ -6,7 +6,6 @@ using VContainer;
 
 namespace App.Presentation.Character
 {
-
 	public class CharacterListPresenter : ICharacterListPresenter
 	{
 		public IReadOnlyReactiveProperty<int> TotalPrice => useCase.TotalSellPrice;
@@ -36,7 +35,11 @@ namespace App.Presentation.Character
 
 		public async UniTask SellSelectedCharacters()
 		{
-			await useCase.SellAsync();
+			if (!await useCase.SellAsync())
+			{
+				return;
+			}
+
 			await PrepareIcons(useCase.Characters.Value);
 		}
 
@@ -54,5 +57,4 @@ namespace App.Presentation.Character
 			iconPresenters.Value = presenters;
 		}
 	}
-
 }

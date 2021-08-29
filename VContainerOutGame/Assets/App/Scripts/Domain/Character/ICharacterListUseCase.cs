@@ -4,7 +4,6 @@ using UniRx;
 
 namespace App.Domain.Character
 {
-
 	public interface ICharacterListUseCase
 	{
 		IReadOnlyReactiveProperty<bool> CanSell { get; }
@@ -12,7 +11,6 @@ namespace App.Domain.Character
 		IReadOnlyReactiveProperty<IReadOnlyList<CharacterEntity>> Characters { get; }
 
 		UniTask Prepare();
-		UniTask SellAsync();
+		UniTask<bool> SellAsync();
 	}
-
 }
