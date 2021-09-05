@@ -1,5 +1,7 @@
 using App.Domain;
+using App.Domain.Character;
 using Cysharp.Threading.Tasks;
+using VContainer;
 
 namespace App.Presentation.Character
 {
@@ -7,6 +9,7 @@ namespace App.Presentation.Character
 	{
 		readonly ITwoButtonDialogFactory twoButtonDialogFactory;
 
+		[Inject]
 		public CharacterListDialogHelper(ITwoButtonDialogFactory twoButtonDialogFactory)
 		{
 			this.twoButtonDialogFactory = twoButtonDialogFactory;

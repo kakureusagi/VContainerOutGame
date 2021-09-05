@@ -157,7 +157,6 @@ MonoBehaviour:
   autoRun: 1
   autoInjectGameObjects:
   - {fileID: 764441183}
-  iconView: {fileID: 2561050440578743495, guid: db57b76240b018f43aaa1ce424cea6b4, type: 3}
   view: {fileID: 764441186}
   dialogRoot: {fileID: 470101248}
   dialogLifeTimeScopes:
@@ -992,6 +991,7 @@ MonoBehaviour:
   sellButton: {fileID: 717478259}
   sellButtonMask: {fileID: 665807381}
   totalPrice: {fileID: 1119275820}
+  iconPrefab: {fileID: 2561050440578743495, guid: db57b76240b018f43aaa1ce424cea6b4, type: 3}
 --- !u!1 &868370893
 GameObject:
   m_ObjectHideFlags: 0

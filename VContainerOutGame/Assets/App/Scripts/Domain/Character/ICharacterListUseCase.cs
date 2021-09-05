@@ -4,7 +4,7 @@ using UniRx;
 
 namespace App.Domain.Character
 {
-	public interface ICharacterListUseCase
+	public interface ICharacterListUseCase : ICharacterIconUseCase
 	{
 		IReadOnlyReactiveProperty<bool> CanSell { get; }
 		IReadOnlyReactiveProperty<int> TotalSellPrice { get; }

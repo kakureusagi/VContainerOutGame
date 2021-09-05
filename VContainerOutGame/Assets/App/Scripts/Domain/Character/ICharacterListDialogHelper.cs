@@ -1,6 +1,6 @@
 using Cysharp.Threading.Tasks;
 
-namespace App.Domain
+namespace App.Domain.Character
 {
 	public interface ICharacterListDialogHelper
 	{

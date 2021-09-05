@@ -1,32 +1,11 @@
 using App.Domain.Character;
 using UniRx;
 using UnityEngine;
-using VContainer;
 
 namespace App.Presentation.Character
 {
-
-	public class CharacterIconPresenter : ICharacterIconPresenter
+	public class CharacterIconPresenter
 	{
-		public class Factory : ICharacterIconPresenter.IFactory
-		{
-			readonly ICharacterIconUseCase useCase;
-			readonly IResourceLoader resourceLoader;
-
-			[Inject]
-			public Factory(ICharacterIconUseCase useCase, IResourceLoader resourceLoader)
-			{
-				this.useCase = useCase;
-				this.resourceLoader = resourceLoader;
-			}
-
-			public ICharacterIconPresenter Create(CharacterEntity entity)
-			{
-				return new CharacterIconPresenter(entity, useCase, resourceLoader);
-			}
-		}
-
-
 		public IReadOnlyReactiveProperty<bool> IsSelected => isSelected;
 
 		public string Name => entity.Name;
@@ -44,7 +23,7 @@ namespace App.Presentation.Character
 		IReadOnlyReactiveProperty<bool> isSelected;
 
 
-		CharacterIconPresenter(CharacterEntity entity, ICharacterIconUseCase useCase, IResourceLoader resourceLoader)
+		public CharacterIconPresenter(CharacterEntity entity, ICharacterIconUseCase useCase, IResourceLoader resourceLoader)
 		{
 			this.entity = entity;
 			this.useCase = useCase;
@@ -76,5 +55,4 @@ namespace App.Presentation.Character
 			}
 		}
 	}
-
 }

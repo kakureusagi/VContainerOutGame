@@ -2,31 +2,11 @@ using Cysharp.Threading.Tasks;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
-using VContainer;
 
 namespace App.Presentation
 {
 	public class TwoButtonDialogView : DialogViewBase
 	{
-		public class Factory
-		{
-			readonly TwoButtonDialogView prefab;
-
-			[Inject]
-			public Factory(TwoButtonDialogView prefab)
-			{
-				this.prefab = prefab;
-			}
-
-			public TwoButtonDialogView Create(Transform parent, TwoButtonDialogPresenter presenter)
-			{
-				var view = Instantiate(prefab, parent);
-				view.Construct(presenter);
-				return view;
-			}
-		}
-
-
 		[SerializeField]
 		Text title = default;
 
@@ -45,15 +25,17 @@ namespace App.Presentation
 		[SerializeField]
 		Button cancelButton = default;
 
-		ITwoButtonDialogPresenter presenter;
+		TwoButtonDialogPresenter presenter;
 
-		public void Construct(ITwoButtonDialogPresenter presenter)
+		public void Construct(TwoButtonDialogPresenter presenter)
 		{
 			this.presenter = presenter;
 		}
 
 		public async UniTask Prepare()
 		{
+			await presenter.Prepare();
+
 			title.text = presenter.Title;
 			body.text = presenter.Body;
 			okButtonText.text = presenter.OkButtonName;
@@ -73,8 +55,6 @@ namespace App.Presentation
 					presenter.CloseAsync().Forget();
 				})
 				.AddTo(this);
-
-			await UniTask.CompletedTask;
 		}
 	}
 }

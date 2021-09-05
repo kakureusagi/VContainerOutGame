@@ -6,24 +6,22 @@ using VContainer;
 
 namespace App.Presentation.Character
 {
-	public class CharacterListPresenter : ICharacterListPresenter
+	public class CharacterListPresenter
 	{
 		public IReadOnlyReactiveProperty<int> TotalPrice => useCase.TotalSellPrice;
 		public IReadOnlyReactiveProperty<bool> CanSell => useCase.CanSell;
-		public IReadOnlyReactiveProperty<IReadOnlyList<ICharacterIconPresenter>> IconPresenters => iconPresenters;
+		public IReadOnlyReactiveProperty<IReadOnlyList<CharacterIconPresenter>> IconPresenters => iconPresenters;
 
 		readonly ICharacterListUseCase useCase;
-		readonly ICharacterIconPresenter.IFactory iconFactory;
 		readonly IResourceLoader resourceLoader;
 
-		readonly ReactiveProperty<IReadOnlyList<ICharacterIconPresenter>> iconPresenters = new ReactiveProperty<IReadOnlyList<ICharacterIconPresenter>>();
+		readonly ReactiveProperty<IReadOnlyList<CharacterIconPresenter>> iconPresenters = new ReactiveProperty<IReadOnlyList<CharacterIconPresenter>>();
 
 
 		[Inject]
-		public CharacterListPresenter(ICharacterListUseCase useCase, ICharacterIconPresenter.IFactory iconFactory, IResourceLoader resourceLoader)
+		public CharacterListPresenter(ICharacterListUseCase useCase, IResourceLoader resourceLoader)
 		{
 			this.useCase = useCase;
-			this.iconFactory = iconFactory;
 			this.resourceLoader = resourceLoader;
 		}
 
@@ -45,10 +43,10 @@ namespace App.Presentation.Character
 
 		async UniTask PrepareIcons(IReadOnlyList<CharacterEntity> entities)
 		{
-			var presenters = new ICharacterIconPresenter[entities.Count];
+			var presenters = new CharacterIconPresenter[entities.Count];
 			for (var i = 0; i < presenters.Length; i++)
 			{
-				var presenter = iconFactory.Create(entities[i]);
+				var presenter = new CharacterIconPresenter(entities[i], useCase, resourceLoader);
 				presenter.Prepare();
 				presenters[i] = presenter;
 			}

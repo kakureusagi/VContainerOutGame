@@ -1,5 +1,4 @@
 using App.Data.Character;
-using App.Domain;
 using App.Domain.Character;
 using App.Presentation;
 using App.Presentation.Character;
@@ -11,9 +10,6 @@ namespace App.EntryPoint
 {
 	public class CharacterListLifeScope : LifetimeScope
 	{
-		[SerializeField]
-		CharacterIconView iconView = default;
-
 		[SerializeField]
 		CharacterListView view = default;
 
@@ -36,19 +32,13 @@ namespace App.EntryPoint
 			//
 			// Character List
 			//
-			builder.Register<CharacterListUseCase>(Lifetime.Singleton).AsImplementedInterfaces();
-			builder.Register<CharacterListPresenter>(Lifetime.Singleton).AsImplementedInterfaces();
+			builder.Register<ICharacterListUseCase, CharacterListUseCase>(Lifetime.Transient);
+			builder.Register<CharacterListPresenter>(Lifetime.Transient);
 			builder.RegisterComponent(view);
+
 			builder.Register<ICharacterRepository, TestCharacterRepository>(Lifetime.Transient);
 			builder.Register<CharacterPriceCalculator>(Lifetime.Transient);
 			builder.Register<ICharacterListDialogHelper, CharacterListDialogHelper>(Lifetime.Transient);
-
-			//
-			// CharacterIcon
-			//
-			builder.RegisterComponent(iconView);
-			builder.Register<CharacterIconView.Factory>(Lifetime.Transient);
-			builder.Register<ICharacterIconPresenter.IFactory, CharacterIconPresenter.Factory>(Lifetime.Transient);
 
 			foreach (var scope in dialogLifeTimeScopes)
 			{

@@ -6,7 +6,6 @@ using VContainer;
 
 namespace App.Presentation.Character
 {
-
 	public class CharacterListView : MonoBehaviour
 	{
 		[SerializeField]
@@ -21,16 +20,17 @@ namespace App.Presentation.Character
 		[SerializeField]
 		Text totalPrice = default;
 
+		[SerializeField]
+		CharacterIconView iconPrefab = default;
 
-		ICharacterListPresenter presenter;
-		CharacterIconView.Factory iconFactory;
+
+		CharacterListPresenter presenter;
 
 
 		[Inject]
-		public void Construct(ICharacterListPresenter presenter, CharacterIconView.Factory iconFactory)
+		public void Construct(CharacterListPresenter presenter)
 		{
 			this.presenter = presenter;
-			this.iconFactory = iconFactory;
 		}
 
 		public async UniTask Prepare()
@@ -40,12 +40,12 @@ namespace App.Presentation.Character
 			presenter.IconPresenters
 				.Subscribe(icons =>
 				{
-					// パフォーマンスを上げるためにInstantiateするプレハブの数を制限したりしてもよいね
 					iconRoot.DestroyChildren();
 
 					foreach (var icon in icons)
 					{
-						var iconView = iconFactory.Create(iconRoot.transform, icon);
+						var iconView = Instantiate(iconPrefab, iconRoot.transform);
+						iconView.Construct(icon);
 						iconView.Prepare();
 					}
 				})
@@ -67,7 +67,5 @@ namespace App.Presentation.Character
 				.Subscribe(_ => presenter.SellSelectedCharacters().Forget())
 				.AddTo(this);
 		}
-
 	}
-
 }

@@ -2,42 +2,36 @@ using App.Domain;
 
 namespace App.Presentation
 {
-	public interface ITwoButtonDialogPresenter : IDialogPresenter
+	public class TwoButtonDialogPresenter : DialogPresenterBase
 	{
-		string Title { get; }
-		string Body { get; }
-		string OkButtonName { get; }
-		string CancelButtonName { get; }
-
-		void Ok();
-		void Cancel();
-	}
-
-	public class TwoButtonDialogPresenter : DialogPresenterBase, ITwoButtonDialogPresenter
-	{
-		public class Factory
+		public class Input
 		{
-			public TwoButtonDialogPresenter Create(ITwoButtonDialogUseCase useCase, string title, string body, string okButtonName, string cancelButtonName)
+			public string Title { get; }
+			public string Body { get; }
+			public string OkButtonName { get; }
+			public string CancelButtonName { get; }
+
+			public Input(string title, string body, string okButtonName, string cancelButtonName)
 			{
-				return new TwoButtonDialogPresenter(useCase, title, body, okButtonName, cancelButtonName);
+				Title = title;
+				Body = body;
+				OkButtonName = okButtonName;
+				CancelButtonName = cancelButtonName;
 			}
 		}
 
-
-		public string Title { get; }
-		public string Body { get; }
-		public string OkButtonName { get; }
-		public string CancelButtonName { get; }
+		public string Title => input.Title;
+		public string Body => input.Body;
+		public string OkButtonName => input.OkButtonName;
+		public string CancelButtonName => input.CancelButtonName;
 
 		readonly ITwoButtonDialogUseCase useCase;
+		readonly Input input;
 
-		public TwoButtonDialogPresenter(ITwoButtonDialogUseCase useCase, string title, string body, string okButtonName, string cancelButtonName) : base(useCase)
+		public TwoButtonDialogPresenter(ITwoButtonDialogUseCase useCase, Input input) : base(useCase)
 		{
 			this.useCase = useCase;
-			Title = title;
-			Body = body;
-			OkButtonName = okButtonName;
-			CancelButtonName = cancelButtonName;
+			this.input = input;
 		}
 
 		public void Ok()

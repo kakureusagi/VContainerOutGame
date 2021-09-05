@@ -7,7 +7,7 @@ using VContainer;
 
 namespace App.Domain.Character
 {
-	public class CharacterListUseCase : ICharacterListUseCase, ICharacterIconUseCase
+	public class CharacterListUseCase : ICharacterListUseCase
 	{
 		public IReadOnlyReactiveProperty<bool> CanSell => canSell;
 		public IReadOnlyReactiveProperty<int> TotalSellPrice => totalSellPrice;

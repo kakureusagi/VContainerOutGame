@@ -12,6 +12,11 @@ namespace App.Presentation
 			this.useCase = useCase;
 		}
 
+		public async UniTask Prepare()
+		{
+			await UniTask.CompletedTask;
+		}
+
 		public async UniTask CloseAsync()
 		{
 			await useCase.CloseAsync();

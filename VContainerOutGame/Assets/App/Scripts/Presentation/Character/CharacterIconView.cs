@@ -5,28 +5,8 @@ using VContainer;
 
 namespace App.Presentation.Character
 {
-
 	public class CharacterIconView : MonoBehaviour
 	{
-		public class Factory
-		{
-			readonly CharacterIconView prefab;
-
-			[Inject]
-			public Factory(CharacterIconView prefab)
-			{
-				this.prefab = prefab;
-			}
-
-			public CharacterIconView Create(Transform parent, ICharacterIconPresenter presenter)
-			{
-				var instance = Instantiate(prefab, parent);
-				instance.Construct(presenter);
-				return instance;
-			}
-		}
-
-
 		[SerializeField]
 		Text characterName = default;
 
@@ -52,10 +32,11 @@ namespace App.Presentation.Character
 		Image characterImage = default;
 
 
-		ICharacterIconPresenter presenter;
+		CharacterIconPresenter presenter;
 
 
-		void Construct(ICharacterIconPresenter presenter)
+		[Inject]
+		public void Construct(CharacterIconPresenter presenter)
 		{
 			this.presenter = presenter;
 		}
@@ -78,5 +59,4 @@ namespace App.Presentation.Character
 				.AddTo(this);
 		}
 	}
-
 }
