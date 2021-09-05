@@ -11,13 +11,13 @@ namespace App.Domain.Character
 	{
 		public IReadOnlyReactiveProperty<bool> CanSell => canSell;
 		public IReadOnlyReactiveProperty<int> TotalSellPrice => totalSellPrice;
-		public IReadOnlyReactiveProperty<IReadOnlyList<CharacterEntity>> Characters => characters;
-		public IReadOnlyReactiveCollection<CharacterEntity> SelectedCharacters => selectedCharacters;
+		public IReadOnlyReactiveProperty<IReadOnlyList<CharacterCard>> Characters => characters;
+		public IReadOnlyReactiveCollection<CharacterCard> SelectedCharacters => selectedCharacters;
 
 		readonly ReactiveProperty<bool> canSell = new ReactiveProperty<bool>();
 		readonly ReactiveProperty<int> totalSellPrice = new ReactiveProperty<int>();
-		readonly ReactiveProperty<IReadOnlyList<CharacterEntity>> characters = new ReactiveProperty<IReadOnlyList<CharacterEntity>>();
-		readonly ReactiveCollection<CharacterEntity> selectedCharacters = new ReactiveCollection<CharacterEntity>();
+		readonly ReactiveProperty<IReadOnlyList<CharacterCard>> characters = new ReactiveProperty<IReadOnlyList<CharacterCard>>();
+		readonly ReactiveCollection<CharacterCard> selectedCharacters = new ReactiveCollection<CharacterCard>();
 
 		readonly CharacterPriceCalculator priceCalculator;
 		readonly ICharacterRepository characterRepository;
@@ -52,7 +52,7 @@ namespace App.Domain.Character
 
 			await characterRepository.SellCharacters(selectedCharacters.ToArray());
 
-			var temp = new List<CharacterEntity>(characters.Value);
+			var temp = new List<CharacterCard>(characters.Value);
 			foreach (var selectedCharacter in selectedCharacters)
 			{
 				temp.Remove(selectedCharacter);
@@ -66,7 +66,7 @@ namespace App.Domain.Character
 			return true;
 		}
 
-		public void Select(CharacterEntity character)
+		public void Select(CharacterCard character)
 		{
 			if (character == null)
 			{
@@ -88,7 +88,7 @@ namespace App.Domain.Character
 			canSell.Value = true;
 		}
 
-		public void Unselect(CharacterEntity character)
+		public void Unselect(CharacterCard character)
 		{
 			if (character == null)
 			{

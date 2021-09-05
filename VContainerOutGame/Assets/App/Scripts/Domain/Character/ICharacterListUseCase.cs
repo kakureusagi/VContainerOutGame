@@ -8,7 +8,7 @@ namespace App.Domain.Character
 	{
 		IReadOnlyReactiveProperty<bool> CanSell { get; }
 		IReadOnlyReactiveProperty<int> TotalSellPrice { get; }
-		IReadOnlyReactiveProperty<IReadOnlyList<CharacterEntity>> Characters { get; }
+		IReadOnlyReactiveProperty<IReadOnlyList<CharacterCard>> Characters { get; }
 
 		UniTask Prepare();
 		UniTask<bool> SellAsync();

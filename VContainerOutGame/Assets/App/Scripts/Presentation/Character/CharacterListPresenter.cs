@@ -41,7 +41,7 @@ namespace App.Presentation.Character
 			await PrepareIcons(useCase.Characters.Value);
 		}
 
-		async UniTask PrepareIcons(IReadOnlyList<CharacterEntity> entities)
+		async UniTask PrepareIcons(IReadOnlyList<CharacterCard> entities)
 		{
 			var presenters = new CharacterIconPresenter[entities.Count];
 			for (var i = 0; i < presenters.Length; i++)

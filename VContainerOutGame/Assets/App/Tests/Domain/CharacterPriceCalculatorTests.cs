@@ -24,7 +24,7 @@ namespace App.Domain.Tests.Characters
 		[TestCase(CharacterRarity.Legendary, 3, 300)]
 		public void 正しく計算できる(CharacterRarity rarity, int level, int expected)
 		{
-			var entity = new CharacterEntity(1, "test_name", rarity, level, 99, 99);
+			var entity = new CharacterCard(1, "test_name", rarity, level, 99, 99);
 			var price = calculator.CalculatePrice(entity);
 			Assert.That(price, Is.EqualTo(expected));
 		}

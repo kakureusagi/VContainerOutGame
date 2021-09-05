@@ -10,12 +10,12 @@ namespace App.Domain.Character
 		/// 所持しているキャラクター一覧を取得する
 		/// </summary>
 		/// <returns></returns>
-		UniTask<IReadOnlyList<CharacterEntity>> GetOwnedCharacters();
+		UniTask<IReadOnlyList<CharacterCard>> GetOwnedCharacters();
 
 		/// <summary>
 		/// キャラクターを売却する
 		/// </summary>
-		UniTask SellCharacters(IEnumerable<CharacterEntity> characters);
+		UniTask SellCharacters(IEnumerable<CharacterCard> characters);
 	}
 
 }

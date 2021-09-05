@@ -40,17 +40,17 @@ namespace App.Data.Character
 		};
 
 
-		public CharacterEntity[] Convert(CharacterListResponseBody response)
+		public CharacterCard[] Convert(CharacterListResponseBody response)
 		{
 			// マスターデータとAPIのレスポンス情報からゲームで使用するEntityを作成する
 
-			var entities = new CharacterEntity[response.Characters.Length];
+			var entities = new CharacterCard[response.Characters.Length];
 			for (var i = 0; i < entities.Length; i++)
 			{
 				var responseCharacter = response.Characters[i];
 				var masterCharacter = master.Records.First(m => m.Id == responseCharacter.Id);
 
-				entities[i] = new CharacterEntity(
+				entities[i] = new CharacterCard(
 					responseCharacter.Id,
 					masterCharacter.Name,
 					(CharacterRarity)masterCharacter.Rarity,

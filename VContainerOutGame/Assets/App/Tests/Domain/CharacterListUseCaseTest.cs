@@ -12,20 +12,20 @@ namespace App.Domain.Tests
 	{
 		class MockRepository : ICharacterRepository
 		{
-			CharacterEntity[] entities;
+			CharacterCard[] entities;
 
-			public MockRepository(CharacterEntity[] entities)
+			public MockRepository(CharacterCard[] entities)
 			{
 				this.entities = entities;
 			}
 
-			public async UniTask<IReadOnlyList<CharacterEntity>> GetOwnedCharacters()
+			public async UniTask<IReadOnlyList<CharacterCard>> GetOwnedCharacters()
 			{
 				await UniTask.Delay(1);
 				return entities;
 			}
 
-			public async UniTask SellCharacters(IEnumerable<CharacterEntity> characters)
+			public async UniTask SellCharacters(IEnumerable<CharacterCard> characters)
 			{
 				entities = entities
 					.Where(entity => characters.All(c => c.Id != entity.Id))
@@ -54,7 +54,7 @@ namespace App.Domain.Tests
 
 
 		CharacterPriceCalculator calculator;
-		CharacterEntity[] entities;
+		CharacterCard[] entities;
 		MockRepository repository;
 		MockDialogHelper dialogHelper;
 
@@ -64,10 +64,10 @@ namespace App.Domain.Tests
 			calculator = new CharacterPriceCalculator();
 			entities = new[]
 			{
-				new CharacterEntity(1, "name_1", CharacterRarity.Common, 1, 10, 100),
-				new CharacterEntity(2, "name_2", CharacterRarity.Rare, 2, 20, 200),
-				new CharacterEntity(3, "name_3", CharacterRarity.Epic, 3, 30, 300),
-				new CharacterEntity(4, "name_4", CharacterRarity.Legendary, 4, 40, 400),
+				new CharacterCard(1, "name_1", CharacterRarity.Common, 1, 10, 100),
+				new CharacterCard(2, "name_2", CharacterRarity.Rare, 2, 20, 200),
+				new CharacterCard(3, "name_3", CharacterRarity.Epic, 3, 30, 300),
+				new CharacterCard(4, "name_4", CharacterRarity.Legendary, 4, 40, 400),
 			};
 			repository = new MockRepository(entities);
 			dialogHelper = new MockDialogHelper();
@@ -92,7 +92,7 @@ namespace App.Domain.Tests
 		{
 			yield return UniTask.ToCoroutine(async () =>
 			{
-				var useCase = new CharacterListUseCase(calculator, new MockRepository(new CharacterEntity[0]), new MockDialogHelper());
+				var useCase = new CharacterListUseCase(calculator, new MockRepository(new CharacterCard[0]), new MockDialogHelper());
 				await useCase.Prepare();
 
 				Assert.That(useCase.Characters.Value.Count, Is.Zero);
@@ -195,7 +195,7 @@ namespace App.Domain.Tests
 			yield return UniTask.ToCoroutine(async () =>
 			{
 				var useCase = await CreateUseCaseAsync();
-				var entity = new CharacterEntity(999, "name_999", CharacterRarity.Common, 1, 2, 3);
+				var entity = new CharacterCard(999, "name_999", CharacterRarity.Common, 1, 2, 3);
 
 				Assert.That(() => useCase.Select(entity), Throws.InvalidOperationException);
 			});
@@ -226,7 +226,7 @@ namespace App.Domain.Tests
 			yield return UniTask.ToCoroutine(async () =>
 			{
 				var useCase = await CreateUseCaseAsync();
-				var entity = new CharacterEntity(999, "name_999", CharacterRarity.Common, 1, 2, 3);
+				var entity = new CharacterCard(999, "name_999", CharacterRarity.Common, 1, 2, 3);
 
 				Assert.That(() => useCase.Unselect(entity), Throws.InvalidOperationException);
 			});

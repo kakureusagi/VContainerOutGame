@@ -5,11 +5,11 @@ namespace App.Domain.Character
 
 	public interface ICharacterIconUseCase
 	{
-		void Select(CharacterEntity character);
+		void Select(CharacterCard character);
 
-		void Unselect(CharacterEntity character);
+		void Unselect(CharacterCard character);
 
-		IReadOnlyReactiveCollection<CharacterEntity> SelectedCharacters { get; }
+		IReadOnlyReactiveCollection<CharacterCard> SelectedCharacters { get; }
 	}
 
 }

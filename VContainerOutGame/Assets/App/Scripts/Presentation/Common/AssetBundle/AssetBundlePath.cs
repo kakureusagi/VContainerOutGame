@@ -6,9 +6,9 @@ namespace App.Presentation
 	public static class AssetBundlePath
 	{
 
-		public static string GetCharacterIcon(CharacterEntity entity)
+		public static string GetCharacterIcon(CharacterCard card)
 		{
-			return $"Assets/App/AssetBundles/Character/chara_{entity.Id}.png";
+			return $"Assets/App/AssetBundles/Character/chara_{card.Id}.png";
 		}
 	}
 

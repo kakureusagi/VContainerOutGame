@@ -8,14 +8,14 @@ namespace App.Presentation.Character
 	{
 		public IReadOnlyReactiveProperty<bool> IsSelected => isSelected;
 
-		public string Name => entity.Name;
-		public CharacterRarity Rarity => entity.Rarity;
-		public int Level => entity.Level;
-		public int Hp => entity.Hp;
-		public int Attack => entity.Attack;
+		public string Name => card.Name;
+		public CharacterRarity Rarity => card.Rarity;
+		public int Level => card.Level;
+		public int Hp => card.Hp;
+		public int Attack => card.Attack;
 		public Sprite Sprite => sprite;
 
-		readonly CharacterEntity entity;
+		readonly CharacterCard card;
 		readonly ICharacterIconUseCase useCase;
 		readonly IResourceLoader resourceLoader;
 		Sprite sprite;
@@ -23,9 +23,9 @@ namespace App.Presentation.Character
 		IReadOnlyReactiveProperty<bool> isSelected;
 
 
-		public CharacterIconPresenter(CharacterEntity entity, ICharacterIconUseCase useCase, IResourceLoader resourceLoader)
+		public CharacterIconPresenter(CharacterCard card, ICharacterIconUseCase useCase, IResourceLoader resourceLoader)
 		{
-			this.entity = entity;
+			this.card = card;
 			this.useCase = useCase;
 			this.resourceLoader = resourceLoader;
 		}
@@ -33,25 +33,25 @@ namespace App.Presentation.Character
 		public void Prepare()
 		{
 			var add = useCase.SelectedCharacters.ObserveAdd()
-				.Where(e => e.Value == entity)
+				.Where(e => e.Value == card)
 				.Select(_ => true);
 			var remove = useCase.SelectedCharacters.ObserveRemove()
-				.Where(e => e.Value == entity)
+				.Where(e => e.Value == card)
 				.Select(_ => false);
 			isSelected = add.Merge(remove).ToReadOnlyReactiveProperty(false);
 
-			resourceLoader.Load<Sprite>(AssetBundlePath.GetCharacterIcon(entity), asset => sprite = asset);
+			resourceLoader.Load<Sprite>(AssetBundlePath.GetCharacterIcon(card), asset => sprite = asset);
 		}
 
 		public void OnClick()
 		{
 			if (isSelected.Value)
 			{
-				useCase.Unselect(entity);
+				useCase.Unselect(card);
 			}
 			else
 			{
-				useCase.Select(entity);
+				useCase.Select(card);
 			}
 		}
 	}

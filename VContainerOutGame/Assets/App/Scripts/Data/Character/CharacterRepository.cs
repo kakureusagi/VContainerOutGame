@@ -22,7 +22,7 @@ namespace App.Data.Character
 			this.characterTranslator = characterTranslator;
 		}
 
-		public async UniTask<IReadOnlyList<CharacterEntity>> GetOwnedCharacters()
+		public async UniTask<IReadOnlyList<CharacterCard>> GetOwnedCharacters()
 		{
 			var requestContext = new RequestContext
 			{
@@ -34,7 +34,7 @@ namespace App.Data.Character
 			return characterTranslator.Convert(response.Body);
 		}
 
-		public async UniTask SellCharacters(IEnumerable<CharacterEntity> characters)
+		public async UniTask SellCharacters(IEnumerable<CharacterCard> characters)
 		{
 			var requestContext = new CharacterSellRequestContext
 			{

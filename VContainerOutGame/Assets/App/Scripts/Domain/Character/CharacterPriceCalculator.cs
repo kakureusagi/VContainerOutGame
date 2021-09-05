@@ -5,14 +5,14 @@ namespace App.Domain.Character
 
 	public class CharacterPriceCalculator
 	{
-		public int CalculatePrice(CharacterEntity entity)
+		public int CalculatePrice(CharacterCard card)
 		{
-			if (entity == null)
+			if (card == null)
 			{
-				throw new ArgumentNullException(nameof(entity));
+				throw new ArgumentNullException(nameof(card));
 			}
 
-			var basePrice = entity.Rarity switch
+			var basePrice = card.Rarity switch
 			{
 				CharacterRarity.Common => 10,
 				CharacterRarity.Rare => 20,
@@ -21,7 +21,7 @@ namespace App.Domain.Character
 				_ => throw new ArgumentOutOfRangeException()
 			};
 
-			return entity.Level * basePrice;
+			return card.Level * basePrice;
 		}
 	}
 
