@@ -1,8 +1,5 @@
-using App.Data.Character;
-
-namespace App.Data.App.Scripts.Data.Character
+namespace App.Data.Character
 {
-
 	public class CharacterListResponseContext : ResponseContext<CharacterListResponseBody>
 	{
 	}
@@ -17,5 +14,4 @@ namespace App.Data.App.Scripts.Data.Character
 		public int Id { get; set; }
 		public int Level { get; set; }
 	}
-
 }

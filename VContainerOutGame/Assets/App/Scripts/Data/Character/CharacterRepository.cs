@@ -1,15 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
-using App.Data.App.Scripts.Data.Character;
-using App.Data.Character;
 using App.Data.Common;
-using App.Data.Translator;
 using App.Domain.Character;
 using Cysharp.Threading.Tasks;
 
-namespace App.Data
+namespace App.Data.Character
 {
-
 	/// <summary>
 	/// 本番に近い実装のRepository
 	/// 通信処理ができないので動作しません
@@ -51,5 +47,4 @@ namespace App.Data
 			await webRequest.SendAsync<CharacterSellRequestContext, ResponseContext>(requestContext);
 		}
 	}
-
 }

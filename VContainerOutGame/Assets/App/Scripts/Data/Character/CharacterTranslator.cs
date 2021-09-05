@@ -1,10 +1,8 @@
 using System.Linq;
-using App.Data.App.Scripts.Data.Character;
 using App.Domain.Character;
 
-namespace App.Data.Translator
+namespace App.Data.Character
 {
-
 	/// <summary>
 	/// 様々な情報からCharacterEntityへと変換する
 	/// </summary>
@@ -65,5 +63,4 @@ namespace App.Data.Translator
 			return entities;
 		}
 	}
-
 }
